@@ -23,6 +23,9 @@ from setup.util import make_folder
 from setup.dirs import LIB_DIR, LIB_INCLUDE_DIR, LIB_BIN_DIR, LIB_CACHE_DIR, LIB_BUILD_DIR, PROJECT_BUILD_DIR, PROJECT_BUILD_DEBUG_DIR, PROJECT_BUILD_RELEASE_DIR
 from setup.actions.clean import clean
 from setup.dependencies import collect_dependencies
+from ProjectFile import find_project_file
+from setup.colors import red
+
 
 def run_cmake():
     os.system("cmake -S . -B build -G \"Visual Studio 17 2022\"")
@@ -38,27 +41,31 @@ def make_folders():
     make_folder(PROJECT_BUILD_RELEASE_DIR)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")
-    parser.add_argument("--clean", choices=["build", "libs", "all"], help="Completely cleans the lib directory EXCEPT lib/cache.")
-    parser.add_argument("--verbose", action="store_true", help="Turn on verbose mode.")
-    args = parser.parse_args()
-
-    if args.clean:
-        clean(args.clean)
+    project_file = find_project_file()
+    if not project_file:
+        print(red("Unable to find project file!"))
         exit(0)
+    # parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")
+    # parser.add_argument("--clean", choices=["build", "libs", "all"], help="Completely cleans the lib directory EXCEPT lib/cache.")
+    # parser.add_argument("--verbose", action="store_true", help="Turn on verbose mode.")
+    # args = parser.parse_args()
 
-    make_folders()
+    # if args.clean:
+    #     clean(args.clean)
+    #     exit(0)
 
-    dependencies = collect_dependencies(args.verbose)
+    # make_folders()
 
-    for dependency in dependencies:
-        dependency.log_info("Download")
-        dependency.download()
+    # dependencies = collect_dependencies(args.verbose)
 
-        dependency.log_info("Build")
-        dependency.build()
+    # for dependency in dependencies:
+    #     dependency.log_info("Download")
+    #     dependency.download()
 
-        dependency.log_info("Install")
-        dependency.install()
+    #     dependency.log_info("Build")
+    #     dependency.build()
+
+    #     dependency.log_info("Install")
+    #     dependency.install()
     
-    run_cmake()
+    # run_cmake()

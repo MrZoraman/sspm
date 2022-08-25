@@ -1,0 +1,10 @@
+Dirs:
+  Build: build
+  Cache: lib_cache
+  Lib: lib
+Dependencies:
+  - enet
+  - lua
+  - sdl2
+  - utf8
+  - uv
