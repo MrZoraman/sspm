@@ -23,7 +23,7 @@ from setup.util import make_folder
 from setup.dirs import LIB_DIR, LIB_INCLUDE_DIR, LIB_BIN_DIR, LIB_CACHE_DIR, LIB_BUILD_DIR, PROJECT_BUILD_DIR, PROJECT_BUILD_DEBUG_DIR, PROJECT_BUILD_RELEASE_DIR
 from setup.actions.clean import clean
 from setup.dependencies import collect_dependencies
-from ProjectFile import find_project_file
+from Project import find_project
 from setup.colors import red
 
 
@@ -41,8 +41,8 @@ def make_folders():
     make_folder(PROJECT_BUILD_RELEASE_DIR)
 
 if __name__ == '__main__':
-    project_file = find_project_file()
-    if not project_file:
+    project = find_project()
+    if not project:
         print(red("Unable to find project file!"))
         exit(0)
     # parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")

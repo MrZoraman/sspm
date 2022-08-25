@@ -22,7 +22,7 @@ from setup.colors import param
 
 PROJECT_FILE_PATHS = ["sspm.yml", "sspm.yaml", "../sspm.yml", "sspm.yaml"]
 
-def find_project_file():
+def find_project():
     project_file_path = None
     for possible_file_location in PROJECT_FILE_PATHS:
         if os.path.exists(possible_file_location):
@@ -36,7 +36,7 @@ def find_project_file():
     with open(project_file_path, 'r') as file:
         raw_project_file = yaml.load(file, Loader=yaml.FullLoader)
     
-    return ProjectFile()
+    return Project()
 
-class ProjectFile:
+class Project:
     pass
