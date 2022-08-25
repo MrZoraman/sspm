@@ -1,0 +1,1 @@
+# Stupid Simple Package Manager for C/C++
