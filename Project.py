@@ -34,9 +34,16 @@ def find_project():
     print(f"Found project file at: {param(project_file_path)}")
     
     with open(project_file_path, 'r') as file:
-        raw_project_file = yaml.load(file, Loader=yaml.FullLoader)
+        raw_project_data = yaml.load(file, Loader=yaml.FullLoader)
     
-    return Project()
+    return Project(raw_project_data)
 
 class Project:
-    pass
+    def __init__(self, raw_project_data):
+        pass
+
+    def clean(self, clean_type: str):
+        pass
+
+    def make_directories(self):
+        pass

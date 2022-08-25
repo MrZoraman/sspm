@@ -45,14 +45,15 @@ if __name__ == '__main__':
     if not project:
         print(red("Unable to find project file!"))
         exit(0)
-    # parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")
-    # parser.add_argument("--clean", choices=["build", "libs", "all"], help="Completely cleans the lib directory EXCEPT lib/cache.")
-    # parser.add_argument("--verbose", action="store_true", help="Turn on verbose mode.")
-    # args = parser.parse_args()
 
-    # if args.clean:
-    #     clean(args.clean)
-    #     exit(0)
+    parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")
+    parser.add_argument("--clean", choices=["build", "libs", "all"], help="Completely cleans the lib directory EXCEPT lib/cache.")
+    parser.add_argument("--verbose", action="store_true", help="Turn on verbose mode.")
+    args = parser.parse_args()
+
+    if args.clean:
+        project.clean(args.clean)
+        exit(0)
 
     # make_folders()
 
