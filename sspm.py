@@ -38,7 +38,7 @@ def make_folders():
     make_folder(PROJECT_BUILD_RELEASE_DIR)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Various project setup activities including but not limited to downloading and building dependencies.")
+    parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")
     parser.add_argument("--clean", choices=["build", "libs", "all"], help="Completely cleans the lib directory EXCEPT lib/cache.")
     parser.add_argument("--verbose", action="store_true", help="Turn on verbose mode.")
     args = parser.parse_args()
