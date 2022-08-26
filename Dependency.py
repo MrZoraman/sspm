@@ -67,6 +67,9 @@ class Dependency:
     def cmake_file(self):
         return self.__dirs.cmake_file(self.__name)
     
+    def static_lib_file(self, name: str):
+        return self.__dirs.static_lib_file(self.__name, name)
+    
     # def make_folder(self, path):
     #     if os.path.exists(path):
     #         # self.log_verbose(f"Directory {param(path)} already exists.")
@@ -114,7 +117,7 @@ class Dependency:
                     file.write(data)
     
     def unzip_static_lib(self, zip_file: ZipFile, zip_path: str, name: str):
-        lib_file = self.__dirs.static_lib_file(self.__name, name)
+        lib_file = self.static_lib_file(name)
         if os.path.exists(lib_file):
             return
         data = zip_file.read(zip_path)
