@@ -22,10 +22,11 @@ import yaml
 from filesystem import delete_folder, make_folder
 from colors import param, red
 from Dependency import Dependency
+from Dirs import Dirs
 
 PROJECT_FILE_PATHS = ["sspm.yml", "sspm.yaml", "../sspm.yml", "sspm.yaml"]
 
-def find_project():
+def find_project(is_verbose: bool):
     project_file_path = None
     for possible_file_location in PROJECT_FILE_PATHS:
         if os.path.exists(possible_file_location):
@@ -39,38 +40,29 @@ def find_project():
     with open(project_file_path, 'r') as file:
         raw_project_data = yaml.load(file, Loader=yaml.FullLoader)
     
-    return Project(raw_project_data)
+    return Project(raw_project_data, is_verbose)
 
 class Project:
-    def __init__(self, raw_project_data):
-        self.__build_dir = raw_project_data["Dirs"]["Build"]
-        self.__cache_dir = raw_project_data["Dirs"]["Cache"]
-        self.__lib_dir = raw_project_data["Dirs"]["Lib"]
+    def __init__(self, raw_project_data, is_verbose: bool):
+        self.__dirs = Dirs(
+            build_dir=raw_project_data["Dirs"]["Build"],
+            cache_dir=raw_project_data["Dirs"]["Cache"],
+            lib_dir=raw_project_data["Dirs"]["Lib"])
         self.__dependency_name_list = raw_project_data["Dependencies"]
+        self.__is_verbose = is_verbose
 
     def clean(self, clean_type: str):
-        clean_type = clean_type.lower()
-        if clean_type == "all":
-            delete_folder(self.__build_dir)
-            delete_folder(self.__lib_dir)
-        elif clean_type == "build":
-            delete_folder(self.__build_dir)
-        elif clean_type == "libs":
-            delete_folder(self.__lib_dir)
-        else:
-            print(f"{red('Unkonwn clean type:')} {param(clean_type)}")
+        self.__dirs.clean(clean_type)
 
     def make_directories(self):
-        make_folder(self.__build_dir)
-        make_folder(self.__cache_dir)
-        make_folder(self.__lib_dir)
+        self.__dirs.make_directories()
     
-    def __get_dependency(self, dependency_name: str, is_verbose: bool) -> Dependency:
+    def __get_dependency(self, dependency_name: str) -> Dependency:
         dependency_name = dependency_name.lower()
 
         if dependency_name == "utf8":
             from libraries.utf8 import Utf8
-            return Utf8(is_verbose)
+            return Utf8(self.__is_verbose)
         
         return None
     

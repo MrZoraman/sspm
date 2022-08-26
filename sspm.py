@@ -40,15 +40,15 @@ def run_cmake():
 #     make_folder(PROJECT_BUILD_RELEASE_DIR)
 
 if __name__ == '__main__':
-    project = find_project()
-    if not project:
-        print(red("Unable to find project file!"))
-        exit(0)
-
     parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")
     parser.add_argument("--clean", choices=["build", "libs", "all"], help="Completely cleans the lib directory EXCEPT lib/cache.")
     parser.add_argument("--verbose", action="store_true", help="Turn on verbose mode.")
     args = parser.parse_args()
+
+    project = find_project(args.verbose)
+    if not project:
+        print(red("Unable to find project file!"))
+        exit(0)
 
     if args.clean:
         project.clean(args.clean)
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     project.make_directories()
 
-    project.setup_dependencies(args.verbose)
+    project.setup_dependencies()
 
     # make_folders()
 

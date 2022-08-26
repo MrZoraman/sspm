@@ -86,7 +86,6 @@ class Dependency:
         for file_name in zip_file.namelist():
             match = re.match(pattern, file_name)
             if match:
-                group1 = match.group(1)
                 out_file_name = f"{base_path}/{match.group(1)}"
                 if os.path.exists(out_file_name):
                     self.log_verbose(f"File {param(out_file_name)} already exists.")
