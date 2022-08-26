@@ -10,14 +10,18 @@ from Dirs import Dirs
 
 DOWNLOAD_URL = "https://raw.githubusercontent.com/sheredom/utf8.h/4e4d828174c35e4564c31a9e35580c299c69a063/utf8.h"
 
+CACHE_FILE_NAME = "utf8.h"
+
 class Utf8(Dependency):
     def __init__(self, is_verbose: bool, dirs: Dirs):
-        Dependency.__init__(self, "Utf8", is_verbose)
-        self.__dirs = dirs
-        self.__cache_file = dirs.cache_file("utf8.h")
+        Dependency.__init__(self, "Utf8", is_verbose, dirs)
     
     def download(self):
-        self.download_file(DOWNLOAD_URL, self.__cache_file)
+        path = self.cache_file(CACHE_FILE_NAME)
+        self.download_file(DOWNLOAD_URL, path)
+    
+    # def install(self):
+    #     self.copy_include_from_cache(FILE_NAME, FILE_NAME)
     
 #     def download(self):
 #         self.download_file("https://raw.githubusercontent.com/sheredom/utf8.h/4e4d828174c35e4564c31a9e35580c299c69a063/utf8.h", UTF8_CACHE_FILE)

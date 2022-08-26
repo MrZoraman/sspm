@@ -6,11 +6,13 @@ import zipfile
 
 from colors import param
 from log import log_info, log_verbose
+from Dirs import Dirs
 
 class Dependency:
-    def __init__(self, name, is_verbose):
+    def __init__(self, name: str, is_verbose: bool, dirs: Dirs):
         self.__name = name
         self.__is_verbose = is_verbose
+        self.__dirs = dirs
 
     def name(self):
         return self.__name
@@ -27,6 +29,9 @@ class Dependency:
     def install(self):
         pass
 
+    # def copy_include_from_cache(self, cache_src: str, include_dest):
+    #     self.__dirs.copy_include_from_cache(self.__name, self.__is_verbose, f"{self.__name}/{cache_src}", f"{self.__name}/{include_dest}")
+
     # def log_info(self, message):
     #     print(f"[{magenta(self.__name)}] [{LOG_INFO}] {message}")
 
@@ -37,14 +42,17 @@ class Dependency:
     # def log_error(self, message):
     #     print(f"[{magenta(self.__name)}] [{LOG_ERROR}] {message}")
     
-    def download_file(self, url, dest):
-        if os.path.exists(dest):
-            log_verbose(self.__name, self.__is_verbose, "File already exists: ", dest)
+    def download_file(self, url: str, dest_path: str):
+        if os.path.exists(dest_path):
+            log_verbose(self.__name, self.__is_verbose, "File already exists: ", dest_path)
             return
 
-        log_info(self.__name, f"Download {param(url)} -> {param(dest)}")
-        wget.download(url, dest)
+        log_info(self.__name, f"Download {param(url)} -> {param(dest_path)}")
+        wget.download(url, dest_path)
         print()
+    
+    def cache_file(self, name: str):
+        return self.__dirs.cache_file(self.__name, name)
     
     def make_folder(self, path):
         if os.path.exists(path):

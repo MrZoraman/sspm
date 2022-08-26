@@ -16,8 +16,12 @@
 #    misrepresented as being the original software.
 # 3. This notice may not be removed or altered from any source distribution.
 
+import os
+import shutil
+
+from colors import param
 from filesystem import delete_folder, make_folder
-from log import log_error
+from log import log_error, log_info, log_verbose
 
 class Dirs:
     def __init__(self, build_dir: str, cache_dir: str, lib_dir: str):
@@ -38,13 +42,20 @@ class Dirs:
         make_folder(self.__dynamic_lib_dir_debug)
         make_folder(self.__dynamic_lib_dir_release)
     
-    def cache_dir(self, name: str) -> str:
-        folder_name = f"{self.__cache_dir}/{name}"
-        make_folder(folder_name)
-        return folder_name
+    def cache_file(self, dep_name: str, name: str) -> str:
+        file_name = f"{self.__cache_dir}/{dep_name}/{name}"
+        self.__ensure_dir_exists_for_file(dep_name, file_name)
+        return file_name
     
-    def cache_file(self, name: str) -> str:
-        return f"{self.__cache_dir}/{name}"
+    def include_file(self, dep_name: str, name: str) -> str:
+        file_name = f"{self.__include_dir}/{dep_name}/{name}"
+        self.__ensure_dir_exists_for_file(dep_name, file_name)
+        return file_name
+    
+    # def copy_include_from_cache(self, name: str, is_verbose: bool, cache_src: str, include_dest: str):
+    #     include_file = f"{self.__include_dir}/{include_dest}"
+    #     source_file = f"{self.__cache_dir}/{cache_src}"
+    #     self.__copy_file(name, is_verbose, source_file, include_file)
     
     def clean(self, clean_type: str):
         clean_type = clean_type.lower()
@@ -57,3 +68,29 @@ class Dirs:
             delete_folder(self.__lib_dir)
         else:
             log_error("Clean", "Unknown clean type: ", clean_type)
+    
+    def __ensure_dir_exists_for_file(self, dep_name: str, file_name: str):
+        folder_name = os.path.dirname(file_name)
+        if not os.path.exists(folder_name):
+            log_info(dep_name, "Create directory: ", folder_name)
+            os.makedirs(folder_name)
+    
+    # def __copy_file(self, name: str, is_verbose: bool, src: str, dest: str):
+    #     if not os.path.exists(src):
+    #         log_error(name, "File not found: ", src)
+    #         exit(1)
+        
+    #     if os.path.exists(dest):
+    #         log_verbose(name, is_verbose, "File already exists: ", dest)
+    #         return
+        
+    #     dirname = os.path.dirname(dest)
+    #     self.__make_folder(name, dirname)
+
+    #     log_info(name, f"Copy {param(src)} -> {param(dest)}")
+    #     shutil.copyfile(src, dest)
+    
+    # def __make_folder(self, name: str, path: str):
+    #     if not os.path.exists(path):
+    #         log_info(name, "Create directory: ", path)
+    #         os.makedirs(path)

@@ -22,19 +22,12 @@ LOG_INFO = green("Info")
 LOG_VERBOSE = gray("Verbose")
 LOG_ERROR = red("Error")
 
-def log_info(name: str, message: str):
-    print(f"[{magenta(name)}] [{LOG_INFO}] {message}")
+def log_info(name: str, message: str, param_1: str = ''):
+    print(f"[{magenta(name)}] [{LOG_INFO}] {message}{param(param_1)}")
 
-def log_verbose(name: str, is_verbose: bool, message: str):
-    if is_verbose:
-        print(f"[{magenta(name)}] [{LOG_VERBOSE}] {message}")
-
-def log_verbose(name: str, is_verbose: bool, message: str, param_1: str):
+def log_verbose(name: str, is_verbose: bool, message: str, param_1: str = ''):
     if is_verbose:
         print(f"[{magenta(name)}] [{LOG_VERBOSE}] {message}{param(param_1)}")
 
-def log_error(name: str, message: str):
-    print(f"[{magenta(name)}] [{LOG_ERROR}] {message}")
-
-def log_error(name: str, message: str, param_1: str):
+def log_error(name: str, message: str, param_1: str = ''):
     print(f"[{magenta(name)}] [{LOG_ERROR}] {message}{param(param_1)}")
