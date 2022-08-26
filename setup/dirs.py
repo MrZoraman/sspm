@@ -1,8 +1,0 @@
-PROJECT_BUILD_DIR = "build"
-PROJECT_BUILD_DEBUG_DIR = "build/Debug"
-PROJECT_BUILD_RELEASE_DIR = "build/Release"
-LIB_DIR = "lib"
-LIB_CACHE_DIR = "lib/cache"
-LIB_BUILD_DIR = "lib/build"
-LIB_INCLUDE_DIR = "lib/include"
-LIB_BIN_DIR = "lib/bin"
