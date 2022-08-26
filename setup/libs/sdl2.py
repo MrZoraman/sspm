@@ -1,6 +1,6 @@
 import zipfile
 
-from ..Dependency import Dependency
+from ...Dependency import Dependency
 from ..dirs import LIB_INCLUDE_DIR, LIB_BIN_DIR, LIB_CACHE_DIR
 from ..util import extract_pattern_zip
 

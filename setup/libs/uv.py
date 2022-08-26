@@ -1,7 +1,7 @@
 import os
 import zipfile
 
-from ..Dependency import Dependency
+from ...Dependency import Dependency
 from ..dirs import LIB_INCLUDE_DIR, LIB_BIN_DIR, LIB_CACHE_DIR, LIB_BUILD_DIR, PROJECT_BUILD_DEBUG_DIR, PROJECT_BUILD_RELEASE_DIR
 
 UV_CACHE_ZIP = f"{LIB_CACHE_DIR}/libuv-v1.44.2.zip"

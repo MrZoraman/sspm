@@ -20,7 +20,8 @@ import os
 import yaml
 
 from filesystem import delete_folder, make_folder
-from setup.colors import param, red
+from colors import param, red
+from Dependency import Dependency
 
 PROJECT_FILE_PATHS = ["sspm.yml", "sspm.yaml", "../sspm.yml", "sspm.yaml"]
 
@@ -64,12 +65,12 @@ class Project:
         make_folder(self.__cache_dir)
         make_folder(self.__lib_dir)
     
-    def __get_dependency(self, dependency_name: str, is_verbose: bool):
+    def __get_dependency(self, dependency_name: str, is_verbose: bool) -> Dependency:
         dependency_name = dependency_name.lower()
 
         if dependency_name == "utf8":
             from libraries.utf8 import Utf8
-            return Utf8()
+            return Utf8(is_verbose)
         
         return None
     
@@ -79,7 +80,9 @@ class Project:
             if not dependency:
                 print(f"{red('Unable to find dependency:')} {param(dependency_name)}")
             
+            dependency.download()
             
+
 
 #         def clean_build():
 #     notify_clean("Build")

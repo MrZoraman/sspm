@@ -23,7 +23,7 @@ import os
 # from setup.actions.clean import clean
 # from setup.dependencies import collect_dependencies
 from Project import find_project
-from setup.colors import red
+from colors import red
 
 
 def run_cmake():
