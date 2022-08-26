@@ -37,9 +37,6 @@ class Utf8(Dependency):
         include_file_path = self.include_file(INCLUDE_FILE_NAME)
         self.copy_file(cache_file_path, include_file_path)
     
-#     def download(self):
-#         self.download_file("https://raw.githubusercontent.com/sheredom/utf8.h/4e4d828174c35e4564c31a9e35580c299c69a063/utf8.h", UTF8_CACHE_FILE)
-
-#     def install(self):
-#         self.make_folder(UTF8_INCLUDE_DIR)
-#         self.copy_file(UTF8_CACHE_FILE, UTF8_INCLUDE_FILE)
+    def setup_cmake(self):
+        with open(self.cmake_file(), 'w') as file:
+            file.write(f"set(UTF8_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)")

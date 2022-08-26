@@ -50,9 +50,15 @@ class Dirs:
         return file_name
     
     def include_file(self, dep_name: str, name: str) -> str:
-        file_name = f"{self.__include_dir}/{dep_name}/{name}"
+        file_name = f"{self.include_dir(dep_name)}/{name}"
         self.__ensure_dir_exists_for_file(dep_name, file_name)
         return file_name
+
+    def include_dir(self, dep_name: str) -> str:
+        return f"{self.__include_dir}/{dep_name}"
+    
+    def cmake_file(self, dep_name: str) -> str:
+        return f"{self.__cmake_dir}/{dep_name}.cmake"
     
     # def copy_include_from_cache(self, name: str, is_verbose: bool, cache_src: str, include_dest: str):
     #     include_file = f"{self.__include_dir}/{include_dest}"

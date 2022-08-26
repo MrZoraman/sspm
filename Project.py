@@ -77,6 +77,7 @@ class Project:
             dependency.download()
             dependency.build()
             dependency.install()
+            dependency.setup_cmake()
             
 
 

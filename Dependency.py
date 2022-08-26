@@ -29,6 +29,9 @@ class Dependency:
     def install(self):
         pass
 
+    def setup_cmake(self):
+        pass
+
     # def copy_include_from_cache(self, cache_src: str, include_dest):
     #     self.__dirs.copy_include_from_cache(self.__name, self.__is_verbose, f"{self.__name}/{cache_src}", f"{self.__name}/{include_dest}")
 
@@ -56,6 +59,12 @@ class Dependency:
     
     def include_file(self, name: str):
         return self.__dirs.include_file(self.__name, name)
+
+    def include_dir(self):
+        return self.__dirs.include_dir(self.__name)
+    
+    def cmake_file(self):
+        return self.__dirs.cmake_file(self.__name)
     
     # def make_folder(self, path):
     #     if os.path.exists(path):
