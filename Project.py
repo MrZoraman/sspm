@@ -65,6 +65,10 @@ class Project:
             from libraries.utf8 import Utf8
             return Utf8(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "sdl2":
+            from libraries.sdl2 import Sdl2
+            return Sdl2(self.__is_verbose, self.__dirs)
+        
         return None
     
     def setup_dependencies(self):

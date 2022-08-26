@@ -45,7 +45,7 @@ class Dirs:
         make_folder(self.__dynamic_lib_dir_release)
     
     def cache_file(self, dep_name: str, name: str) -> str:
-        file_name = f"{self.__cache_dir}/{dep_name}/{name}"
+        file_name = f"{self.__cache_dir}/{name}"
         self.__ensure_dir_exists_for_file(dep_name, file_name)
         return file_name
     
