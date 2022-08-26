@@ -6,6 +6,6 @@ Dirs:
 Dependencies:
   # - enet
   # - lua
-  # - sdl2
+  - sdl2
   - utf8
   # - uv

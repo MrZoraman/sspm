@@ -16,7 +16,7 @@
 #    misrepresented as being the original software.
 # 3. This notice may not be removed or altered from any source distribution.
 
-import zipfile
+from zipfile import ZipFile
 
 from Dependency import Dependency
 
@@ -36,6 +36,14 @@ class Sdl2(Dependency):
     def download(self):
         path = self.cache_file(CACHE_FILE_NAME)
         self.download_file(DOWNLOAD_URL, path)
+    
+    def install(self):
+        cache_file = self.cache_file(CACHE_FILE_NAME)
+        with ZipFile(cache_file, 'r') as zip:
+            self.unzip_includes(zip, r".*/include/(.+)")
+            self.unzip_static_lib(zip, "SDL2-2.24.0/lib/x64/SDL2.lib", "SDL2.lib")
+            self.unzip_static_lib(zip, "SDL2-2.24.0/lib/x64/SDL2main.lib", "SDL2main.lib")
+            self.unzip_dynamic_lib(zip, "SDL2-2.24.0/lib/x64/SDL2.dll", "SDL2.dll")
 
     # def install(self):
     #     self.make_folder(SDL2_INCLUDE_DIR)

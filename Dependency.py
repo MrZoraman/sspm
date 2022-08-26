@@ -2,7 +2,8 @@ import os
 import re
 import shutil
 import wget
-import zipfile
+
+from zipfile import ZipFile
 
 from colors import param
 from log import log_error, log_info, log_verbose
@@ -99,15 +100,46 @@ class Dependency:
     #     with zipfile.ZipFile(src, 'r') as zip:
     #         zip.extractall(base_dir)
     
-    # def extract_pattern_zip(self, zip_file: zipfile.ZipFile, pattern, base_path):
-    #     for file_name in zip_file.namelist():
-    #         match = re.match(pattern, file_name)
-    #         if match:
-    #             out_file_name = f"{base_path}/{match.group(1)}"
-    #             if os.path.exists(out_file_name):
-    #                 # self.log_verbose(f"File {param(out_file_name)} already exists.")
-    #                 continue
-    #             data = zip_file.read(file_name)
-    #             with open(out_file_name, "wb") as file:
-    #                 # self.log_info(f"Extract {param(file_name)} -> {param(out_file_name)}")
-    #                 file.write(data)
+    def unzip_includes(self, zip_file: ZipFile, pattern: str):
+        for file_name in zip_file.namelist():
+            match = re.match(pattern, file_name)
+            if match:
+                out_file_name = self.include_file(match.group(1))
+                if os.path.exists(out_file_name):
+                    log_verbose(self.__name, self.__is_verbose, "File already exists: ", out_file_name)
+                    continue
+                data = zip_file.read(file_name)
+                with open(out_file_name, "wb") as file:
+                    log_info(self.__name, f"Extract {param(file_name)} -> {param(out_file_name)}")
+                    file.write(data)
+    
+    def unzip_static_lib(self, zip_file: ZipFile, zip_path: str, name: str):
+        lib_file = self.__dirs.static_lib_file(self.__name, name)
+        if os.path.exists(lib_file):
+            return
+        data = zip_file.read(zip_path)
+        with open(lib_file, "wb") as file:
+            log_info(self.__name, f"Extract {param(zip_path)} -> {param(lib_file)}")
+            file.write(data)
+    
+    def __unzip_dynamic_lib_debug(self, zip_file: ZipFile, zip_path: str, name: str):
+        lib_file = self.__dirs.dynamic_lib_file_debug(self.__name, name)
+        if os.path.exists(lib_file):
+            return
+        data = zip_file.read(zip_path)
+        with open(lib_file, "wb") as file:
+            log_info(self.__name, f"Extract {param(zip_path)} -> {param(lib_file)}")
+            file.write(data)
+    
+    def __unzip_dynamic_lib_release(self, zip_file: ZipFile, zip_path: str, name: str):
+        lib_file = self.__dirs.dynamic_lib_file_release(self.__name, name)
+        if os.path.exists(lib_file):
+            return
+        data = zip_file.read(zip_path)
+        with open(lib_file, "wb") as file:
+            log_info(self.__name, f"Extract {param(zip_path)} -> {param(lib_file)}")
+            file.write(data)
+    
+    def unzip_dynamic_lib(self, zip_file: ZipFile, zip_path: str, name: str):
+        self.__unzip_dynamic_lib_debug(zip_file, zip_path, name)
+        self.__unzip_dynamic_lib_release(zip_file, zip_path, name)

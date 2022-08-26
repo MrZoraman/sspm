@@ -60,6 +60,21 @@ class Dirs:
     def cmake_file(self, dep_name: str) -> str:
         return f"{self.__cmake_dir}/{dep_name}.cmake"
     
+    def static_lib_file(self, dep_name: str, name: str):
+        file_name = f"{self.__static_lib_dir}/{dep_name}/{name}"
+        self.__ensure_dir_exists_for_file(dep_name, file_name)
+        return file_name
+    
+    def dynamic_lib_file_debug(self, dep_name: str, name: str):
+        file_name = f"{self.__dynamic_lib_dir_debug}/{name}"
+        self.__ensure_dir_exists_for_file(dep_name, file_name)
+        return file_name
+    
+    def dynamic_lib_file_release(self, dep_name: str, name: str):
+        file_name = f"{self.__dynamic_lib_dir_release}/{name}"
+        self.__ensure_dir_exists_for_file(dep_name, file_name)
+        return file_name
+    
     # def copy_include_from_cache(self, name: str, is_verbose: bool, cache_src: str, include_dest: str):
     #     include_file = f"{self.__include_dir}/{include_dest}"
     #     source_file = f"{self.__cache_dir}/{cache_src}"
