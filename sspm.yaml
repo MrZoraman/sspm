@@ -1,7 +1,7 @@
 Dirs:
-  Build: build
-  Cache: lib_cache
-  Lib: lib
+  Build: test/build
+  Cache: test/lib_cache
+  Lib: test/lib
 Dependencies:
   - enet
   - lua

@@ -7,7 +7,7 @@ import zipfile
 def make_folder(path):
     if not os.path.exists(path):
         print(f"Create directory: \033[92m{path}\033[m")
-        os.mkdir(path)
+        os.makedirs(path)
         return True
     return False
 

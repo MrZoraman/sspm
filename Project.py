@@ -18,7 +18,9 @@
 
 import os
 import yaml
-from setup.colors import param
+
+from filesystem import delete_folder, make_folder
+from setup.colors import param, red
 
 PROJECT_FILE_PATHS = ["sspm.yml", "sspm.yaml", "../sspm.yml", "sspm.yaml"]
 
@@ -40,10 +42,41 @@ def find_project():
 
 class Project:
     def __init__(self, raw_project_data):
-        pass
+        self.__build_dir = raw_project_data["Dirs"]["Build"]
+        self.__cache_dir = raw_project_data["Dirs"]["Cache"]
+        self.__lib_dir = raw_project_data["Dirs"]["Lib"]
+        self.__dependency_list = raw_project_data["Dependencies"]
 
     def clean(self, clean_type: str):
-        pass
+        clean_type = clean_type.lower()
+        if clean_type == "all":
+            delete_folder(self.__build_dir)
+            delete_folder(self.__lib_dir)
+        elif clean_type == "build":
+            delete_folder(self.__build_dir)
+        elif clean_type == "libs":
+            delete_folder(self.__lib_dir)
+        else:
+            print(f"{red('Unkonwn clean type: ')} {param(clean_type)}")
 
     def make_directories(self):
-        pass
+        make_folder(self.__build_dir)
+        make_folder(self.__cache_dir)
+        make_folder(self.__lib_dir)
+
+#         def clean_build():
+#     notify_clean("Build")
+#     delete_folder(PROJECT_BUILD_DIR)
+
+# def clean_libs():
+#     notify_clean("Libraries")
+#     delete_folder(LIB_BUILD_DIR)
+#     delete_folder(LIB_BIN_DIR)
+#     delete_folder(LIB_INCLUDE_DIR)
+
+# def clean(clean_type: str):
+#     clean_type = clean_type.lower()
+#     if clean_type == "build" or clean_type == "all":
+#         clean_build()
+#     if clean_type == "libs" or clean_type == "all":
+#         clean_libs()
