@@ -13,6 +13,7 @@ DOWNLOAD_URL = "https://raw.githubusercontent.com/sheredom/utf8.h/4e4d828174c35e
 class Utf8(Dependency):
     def __init__(self, is_verbose: bool, dirs: Dirs):
         Dependency.__init__(self, "Utf8", is_verbose)
+        self.__dirs = dirs
         self.__cache_file = dirs.cache_file("utf8.h")
     
     def download(self):

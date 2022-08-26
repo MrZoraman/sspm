@@ -29,6 +29,10 @@ def log_verbose(name: str, is_verbose: bool, message: str):
     if is_verbose:
         print(f"[{magenta(name)}] [{LOG_VERBOSE}] {message}")
 
+def log_verbose(name: str, is_verbose: bool, message: str, param_1: str):
+    if is_verbose:
+        print(f"[{magenta(name)}] [{LOG_VERBOSE}] {message}{param(param_1)}")
+
 def log_error(name: str, message: str):
     print(f"[{magenta(name)}] [{LOG_ERROR}] {message}")
 
