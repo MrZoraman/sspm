@@ -5,7 +5,7 @@ import wget
 import zipfile
 
 from colors import param
-from log import log_info, log_verbose
+from log import log_error, log_info, log_verbose
 from Dirs import Dirs
 
 class Dependency:
@@ -54,48 +54,51 @@ class Dependency:
     def cache_file(self, name: str):
         return self.__dirs.cache_file(self.__name, name)
     
-    def make_folder(self, path):
-        if os.path.exists(path):
-            # self.log_verbose(f"Directory {param(path)} already exists.")
-            return
+    def include_file(self, name: str):
+        return self.__dirs.include_file(self.__name, name)
+    
+    # def make_folder(self, path):
+    #     if os.path.exists(path):
+    #         # self.log_verbose(f"Directory {param(path)} already exists.")
+    #         return
 
-        # self.log_info(f"Create directory: {param(path)}")
-        os.mkdir(path)
+    #     # self.log_info(f"Create directory: {param(path)}")
+    #     os.mkdir(path)
             
-    def copy_file(self, src, dest):
+    def copy_file(self, src: str, dest: str):
         if not os.path.exists(src):
-            # self.log_error(f"File not found: {param(src)}")
+            log_error(self.__name, "File not found: ", src)
             exit(1)
         
         if os.path.exists(dest):
-            # self.log_verbose(f"File {param(dest)} already exists.")
+            log_verbose(self.__name, self.__is_verbose, "File already exists: ", dest)
             return
 
-        # self.log_info(f"Copy {param(src)} -> {param(dest)}")
+        log_info(self.__name, f"Copy {param(src)} -> {param(dest)}")
         shutil.copyfile(src, dest)
     
-    def extract_zip(self, src, base_dir, test_dir):
-        if os.path.exists(test_dir):
-            # self.log_verbose(f"Directory {param(test_dir)} already exists.")
-            return
+    # def extract_zip(self, src, base_dir, test_dir):
+    #     if os.path.exists(test_dir):
+    #         # self.log_verbose(f"Directory {param(test_dir)} already exists.")
+    #         return
         
-        if not os.path.exists(src):
-            # self.log_error(f"File {param(src)} does not exist.")
-            exit(1)
+    #     if not os.path.exists(src):
+    #         # self.log_error(f"File {param(src)} does not exist.")
+    #         exit(1)
         
-        # self.log_info(f"Extract {param(src)} -> {param(base_dir)}")
-        with zipfile.ZipFile(src, 'r') as zip:
-            zip.extractall(base_dir)
+    #     # self.log_info(f"Extract {param(src)} -> {param(base_dir)}")
+    #     with zipfile.ZipFile(src, 'r') as zip:
+    #         zip.extractall(base_dir)
     
-    def extract_pattern_zip(self, zip_file: zipfile.ZipFile, pattern, base_path):
-        for file_name in zip_file.namelist():
-            match = re.match(pattern, file_name)
-            if match:
-                out_file_name = f"{base_path}/{match.group(1)}"
-                if os.path.exists(out_file_name):
-                    # self.log_verbose(f"File {param(out_file_name)} already exists.")
-                    continue
-                data = zip_file.read(file_name)
-                with open(out_file_name, "wb") as file:
-                    # self.log_info(f"Extract {param(file_name)} -> {param(out_file_name)}")
-                    file.write(data)
+    # def extract_pattern_zip(self, zip_file: zipfile.ZipFile, pattern, base_path):
+    #     for file_name in zip_file.namelist():
+    #         match = re.match(pattern, file_name)
+    #         if match:
+    #             out_file_name = f"{base_path}/{match.group(1)}"
+    #             if os.path.exists(out_file_name):
+    #                 # self.log_verbose(f"File {param(out_file_name)} already exists.")
+    #                 continue
+    #             data = zip_file.read(file_name)
+    #             with open(out_file_name, "wb") as file:
+    #                 # self.log_info(f"Extract {param(file_name)} -> {param(out_file_name)}")
+    #                 file.write(data)

@@ -74,6 +74,8 @@ class Project:
                 continue
             
             dependency.download()
+            dependency.build()
+            dependency.install()
             
 
 
