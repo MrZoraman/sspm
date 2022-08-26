@@ -30,6 +30,14 @@ class Dirs:
         make_folder(self.__cache_dir)
         make_folder(self.__lib_dir)
     
+    def cache_dir(self, name: str) -> str:
+        folder_name = f"{self.__cache_dir}/{name}"
+        make_folder(folder_name)
+        return folder_name
+    
+    def cache_file(self, name: str) -> str:
+        return f"{self.__cache_dir}/{name}"
+    
     def clean(self, clean_type: str):
         clean_type = clean_type.lower()
         if clean_type == "all":

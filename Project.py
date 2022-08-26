@@ -62,15 +62,16 @@ class Project:
 
         if dependency_name == "utf8":
             from libraries.utf8 import Utf8
-            return Utf8(self.__is_verbose)
+            return Utf8(self.__is_verbose, self.__dirs)
         
         return None
     
-    def setup_dependencies(self, is_verbose: bool):
+    def setup_dependencies(self):
         for dependency_name in self.__dependency_name_list:
-            dependency = self.__get_dependency(dependency_name, is_verbose)
+            dependency = self.__get_dependency(dependency_name)
             if not dependency:
                 print(f"{red('Unable to find dependency:')} {param(dependency_name)}")
+                continue
             
             dependency.download()
             
