@@ -4,7 +4,7 @@ import shutil
 import wget
 import zipfile
 
-from setup.colors import param, magenta, green, gray, red
+from colors import param, magenta, green, gray, red
 
 LOG_INFO = green("Info")
 LOG_VERBOSE = gray("Verbose")
