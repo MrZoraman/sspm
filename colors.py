@@ -21,3 +21,7 @@ def gray(text):
 
 def red(text):
     return f"{COLOR_RED}{text}{COLOR_RESET}"
+
+LOG_INFO = green("Info")
+LOG_VERBOSE = gray("Verbose")
+LOG_ERROR = red("Error")

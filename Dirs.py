@@ -17,18 +17,26 @@
 # 3. This notice may not be removed or altered from any source distribution.
 
 from filesystem import delete_folder, make_folder
-from colors import param, red
+from log import log_error
 
 class Dirs:
     def __init__(self, build_dir: str, cache_dir: str, lib_dir: str):
         self.__build_dir = build_dir
         self.__cache_dir = cache_dir
         self.__lib_dir = lib_dir
+        self.__include_dir = f"{lib_dir}/include"
+        self.__static_lib_dir = f"{lib_dir}/bin"
+        self.__dynamic_lib_dir_debug = f"{build_dir}/Debug"
+        self.__dynamic_lib_dir_release = f"{build_dir}/Release"
     
     def make_directories(self):
         make_folder(self.__build_dir)
         make_folder(self.__cache_dir)
         make_folder(self.__lib_dir)
+        make_folder(self.__include_dir)
+        make_folder(self.__static_lib_dir)
+        make_folder(self.__dynamic_lib_dir_debug)
+        make_folder(self.__dynamic_lib_dir_release)
     
     def cache_dir(self, name: str) -> str:
         folder_name = f"{self.__cache_dir}/{name}"
@@ -48,4 +56,4 @@ class Dirs:
         elif clean_type == "libs":
             delete_folder(self.__lib_dir)
         else:
-            print(f"{red('Unkonwn clean type:')} {param(clean_type)}")
+            log_error("Clean", "Unknown clean type: ", clean_type)
