@@ -45,7 +45,7 @@ class Project:
         self.__build_dir = raw_project_data["Dirs"]["Build"]
         self.__cache_dir = raw_project_data["Dirs"]["Cache"]
         self.__lib_dir = raw_project_data["Dirs"]["Lib"]
-        self.__dependency_list = raw_project_data["Dependencies"]
+        self.__dependency_name_list = raw_project_data["Dependencies"]
 
     def clean(self, clean_type: str):
         clean_type = clean_type.lower()
@@ -57,12 +57,29 @@ class Project:
         elif clean_type == "libs":
             delete_folder(self.__lib_dir)
         else:
-            print(f"{red('Unkonwn clean type: ')} {param(clean_type)}")
+            print(f"{red('Unkonwn clean type:')} {param(clean_type)}")
 
     def make_directories(self):
         make_folder(self.__build_dir)
         make_folder(self.__cache_dir)
         make_folder(self.__lib_dir)
+    
+    def __get_dependency(self, dependency_name: str, is_verbose: bool):
+        dependency_name = dependency_name.lower()
+
+        if dependency_name == "utf8":
+            from libraries.utf8 import Utf8
+            return Utf8()
+        
+        return None
+    
+    def setup_dependencies(self, is_verbose: bool):
+        for dependency_name in self.__dependency_name_list:
+            dependency = self.__get_dependency(dependency_name, is_verbose)
+            if not dependency:
+                print(f"{red('Unable to find dependency:')} {param(dependency_name)}")
+            
+            
 
 #         def clean_build():
 #     notify_clean("Build")

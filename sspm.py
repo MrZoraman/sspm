@@ -56,6 +56,8 @@ if __name__ == '__main__':
 
     project.make_directories()
 
+    project.setup_dependencies(args.verbose)
+
     # make_folders()
 
     # dependencies = collect_dependencies(args.verbose)
