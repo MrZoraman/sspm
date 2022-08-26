@@ -1,12 +1,23 @@
+# Copyright (c) 2022 MrZoraman
+# 
+# This software is provided 'as-is', without any express or implied
+# warranty. In no event will the authors be held liable for any damages
+# arising from the use of this software.
+
+# Permission is granted to anyone to use this software for any purpose,
+# including commercial applications, and to alter it and redistribute it
+# freely, subject to the following restrictions:
+
+# 1. The origin of this software must not be misrepresented; you must not
+#    claim that you wrote the original software. If you use this software
+#    in a product, an acknowledgment in the product documentation would be
+#    appreciated but is not required.
+# 2. Altered source versions must be plainly marked as such, and must not be
+#    misrepresented as being the original software.
+# 3. This notice may not be removed or altered from any source distribution.
+
 from Dependency import Dependency
 from Dirs import Dirs
-
-# from ..Dependency import Dependency
-# from ..dirs import LIB_INCLUDE_DIR, LIB_CACHE_DIR
-
-# UTF8_INCLUDE_DIR = f"{LIB_INCLUDE_DIR}/utf8"
-# UTF8_CACHE_FILE = f"{LIB_CACHE_DIR}/utf8.h"
-# UTF8_INCLUDE_FILE = f"{UTF8_INCLUDE_DIR}/utf8.h"
 
 DOWNLOAD_URL = "https://raw.githubusercontent.com/sheredom/utf8.h/4e4d828174c35e4564c31a9e35580c299c69a063/utf8.h"
 
