@@ -1,3 +1,21 @@
+# Copyright (c) 2022 MrZoraman
+# 
+# This software is provided 'as-is', without any express or implied
+# warranty. In no event will the authors be held liable for any damages
+# arising from the use of this software.
+
+# Permission is granted to anyone to use this software for any purpose,
+# including commercial applications, and to alter it and redistribute it
+# freely, subject to the following restrictions:
+
+# 1. The origin of this software must not be misrepresented; you must not
+#    claim that you wrote the original software. If you use this software
+#    in a product, an acknowledgment in the product documentation would be
+#    appreciated but is not required.
+# 2. Altered source versions must be plainly marked as such, and must not be
+#    misrepresented as being the original software.
+# 3. This notice may not be removed or altered from any source distribution.
+
 import os
 import re
 import shutil
@@ -32,19 +50,6 @@ class Dependency:
 
     def setup_cmake(self):
         pass
-
-    # def copy_include_from_cache(self, cache_src: str, include_dest):
-    #     self.__dirs.copy_include_from_cache(self.__name, self.__is_verbose, f"{self.__name}/{cache_src}", f"{self.__name}/{include_dest}")
-
-    # def log_info(self, message):
-    #     print(f"[{magenta(self.__name)}] [{LOG_INFO}] {message}")
-
-    # def log_verbose(self, message):
-    #     if self.is_verbose:
-    #         print(f"[{magenta(self.__name)}] [{LOG_VERBOSE}] {message}")
-    
-    # def log_error(self, message):
-    #     print(f"[{magenta(self.__name)}] [{LOG_ERROR}] {message}")
     
     def download_file(self, url: str, dest_path: str):
         if os.path.exists(dest_path):
@@ -82,14 +87,6 @@ class Dependency:
     def extract_cache_zip_to_build_dir(self, zip_name:str):
         with ZipFile(self.cache_file(zip_name), 'r') as zip:
             zip.extractall(self.lib_build_dir())
-    
-    # def make_folder(self, path):
-    #     if os.path.exists(path):
-    #         # self.log_verbose(f"Directory {param(path)} already exists.")
-    #         return
-
-    #     # self.log_info(f"Create directory: {param(path)}")
-    #     os.mkdir(path)
             
     def copy_file(self, src: str, dest: str):
         if not os.path.exists(src):
@@ -102,19 +99,6 @@ class Dependency:
 
         log_info(self.__name, f"Copy {param(src)} -> {param(dest)}")
         shutil.copyfile(src, dest)
-    
-    # def extract_zip(self, src, base_dir, test_dir):
-    #     if os.path.exists(test_dir):
-    #         # self.log_verbose(f"Directory {param(test_dir)} already exists.")
-    #         return
-        
-    #     if not os.path.exists(src):
-    #         # self.log_error(f"File {param(src)} does not exist.")
-    #         exit(1)
-        
-    #     # self.log_info(f"Extract {param(src)} -> {param(base_dir)}")
-    #     with zipfile.ZipFile(src, 'r') as zip:
-    #         zip.extractall(base_dir)
     
     def unzip_includes(self, zip_file: ZipFile, pattern: str):
         for file_name in zip_file.namelist():
