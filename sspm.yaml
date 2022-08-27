@@ -5,7 +5,8 @@ Dirs:
   CMake: test/cmake
   LibBuild: test/lib_build
 Dependencies:
-  - gsl
+  - glm
+  # - gsl
   # - enet
   # - lua
   # - sdl2

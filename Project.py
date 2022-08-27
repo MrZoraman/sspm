@@ -85,6 +85,10 @@ class Project:
             from libraries.gsl import Gsl
             return Gsl(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "glm":
+            from libraries.glm import Glm
+            return Glm(self.__is_verbose, self.__dirs)
+        
         return None
     
     def setup_dependencies(self):
