@@ -2,7 +2,7 @@ import os
 import shutil
 import zipfile
 
-from ...Dependency import Dependency
+from ..Dependency import Dependency
 
 from ..dirs import LIB_CACHE_DIR, LIB_BUILD_DIR, LIB_BIN_DIR, LIB_INCLUDE_DIR, PROJECT_BUILD_DEBUG_DIR, PROJECT_BUILD_RELEASE_DIR
 from ..util import download, make_folder, extract_pattern_zip
