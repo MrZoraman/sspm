@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(IMGUI)
+project(IMGUI_OPENGL3)
 
 add_library(imgui_impl_opengl3
     backends/imgui_impl_opengl3.cpp

@@ -5,8 +5,9 @@ Dirs:
   CMake: test/cmake
   LibBuild: test/lib_build
 Dependencies:
+  - glfw
   - imgui
-  - imgui-opengl3
+  - imgui-glfw
   # - glfw
   # - glad
   # - glm
