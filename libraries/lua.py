@@ -17,60 +17,64 @@
 # 3. This notice may not be removed or altered from any source distribution.
 
 import os
-import shutil
-import zipfile
+from zipfile import ZipFile
 
-from ..Dependency import Dependency
+from Dependency import Dependency
 
-from ..dirs import LIB_CACHE_DIR, LIB_BUILD_DIR, LIB_BIN_DIR, LIB_INCLUDE_DIR, PROJECT_BUILD_DEBUG_DIR, PROJECT_BUILD_RELEASE_DIR
-from ..util import download, make_folder, extract_pattern_zip
-
-LUA_CACHE_ZIP = f"{LIB_CACHE_DIR}/lua-5.4.4.zip"
-LUA_BUILD_DIR = f"{LIB_BUILD_DIR}/lua-5.4.4"
-
-LUA_ARTIFACT_LIB = f"{LUA_BUILD_DIR}/build/release/lua54.lib"
-LUA_ARTIFACT_DLL = f"{LUA_BUILD_DIR}/build/release/lua54.dll"
-
-LUA_CMAKE_FILE = "setup/libs/cmakes/Lua54.cmake"
-
-LUA_LIB_BIN_DIR = f"{LIB_BIN_DIR}/lua"
-LUA_LIB_INCLUDE_DIR = f"{LIB_INCLUDE_DIR}/lua"
-LUA_BIN_FILE = f"{LUA_LIB_BIN_DIR}/lua54.lib"
-LUA_DLL_NAME = "lua54.dll"
+DOWNLOAD_URL = "https://github.com/lua/lua/archive/refs/tags/v5.4.4.zip"
+CACHE_FILE_NAME = "lua-v5.4.4.zip"
+ARTIFACT_DLL_NAME = "lua54.dll"
+ARTIFACT_LIB_NAME = "lua54.lib"
+CMAKELISTS_FILE = f"{os.path.dirname(__file__)}/cmakes/Lua54.cmake"
 
 class Lua(Dependency):
     def __init__(self, is_verbose: bool, dirs):
         Dependency.__init__(self, "lua", is_verbose, dirs)
     
     def download(self):
-        self.download_file("https://github.com/lua/lua/archive/refs/tags/v5.4.4.zip", LUA_CACHE_ZIP)
+        path = self.cache_file(CACHE_FILE_NAME)
+        self.download_file(DOWNLOAD_URL, path)
     
+    def __artifact_dll(self):
+        return f"{self.lib_build_dir()}/lua-5.4.4/build/Release/{ARTIFACT_DLL_NAME}"
+    
+    def __artifact_lib(self):
+        return f"{self.lib_build_dir()}/lua-5.4.4/build/Release/{ARTIFACT_LIB_NAME}"
+
     def build(self):
-        if os.path.exists(LUA_ARTIFACT_LIB) and os.path.exists(LUA_ARTIFACT_DLL):
-            self.log_info("Already built.")
+        artifact_file_dll = self.__artifact_dll()
+        if os.path.exists(artifact_file_dll):
+            return
 
-        self.extract_zip(LUA_CACHE_ZIP, LIB_BUILD_DIR, LUA_BUILD_DIR)
-        self.copy_file(LUA_CMAKE_FILE, f"{LUA_BUILD_DIR}/CMakeLists.txt")
+        self.extract_cache_zip_to_build_dir(CACHE_FILE_NAME)
 
-        self.log_info("CMAKE configure")
+        self.copy_file(CMAKELISTS_FILE, f"{self.lib_build_dir()}/lua-5.4.4/CMakeLists.txt")
+        
+        build_dir = f"{self.lib_build_dir()}/lua-5.4.4"
+
         os.system(
             "cmake "
-            f"-S {LUA_BUILD_DIR} "
-            f"-B {LUA_BUILD_DIR}/build "
+            f"-S {build_dir} "
+            f"-B {build_dir}/build "
             "-G \"Visual Studio 17 2022\" "
             "-D CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE "
             "-D BUILD_SHARED_LIBS=TRUE")
-        
-        self.log_info("CMAKE compile")
-        os.system(f"cmake --build {LUA_BUILD_DIR}/build --config Release")
 
+        os.system(f"cmake --build {build_dir}/build --config Release")
+    
     def install(self):
-        self.make_folder(LUA_LIB_BIN_DIR)
-        self.make_folder(LUA_LIB_INCLUDE_DIR)
+        cache_file = self.cache_file(CACHE_FILE_NAME)
+        with ZipFile(cache_file, 'r') as zip:
+            self.unzip_includes(zip, r".*/(.+\.h)$")
+        
+        dll_file_src = self.__artifact_dll()
+        self.copy_file(dll_file_src, self.dynamic_lib_file_debug(ARTIFACT_DLL_NAME))
+        self.copy_file(dll_file_src, self.dynamic_lib_file_release(ARTIFACT_DLL_NAME))
 
-        self.copy_file(LUA_ARTIFACT_LIB, LUA_BIN_FILE)
-        self.copy_file(LUA_ARTIFACT_DLL, f"{PROJECT_BUILD_DEBUG_DIR}/{LUA_DLL_NAME}")
-        self.copy_file(LUA_ARTIFACT_DLL, f"{PROJECT_BUILD_RELEASE_DIR}/{LUA_DLL_NAME}")
+        lib_file_src = self.__artifact_lib()
+        self.copy_file(lib_file_src, self.static_lib_file(ARTIFACT_LIB_NAME))
 
-        with zipfile.ZipFile(LUA_CACHE_ZIP, 'r') as zip:
-            self.extract_pattern_zip(zip, r".*/(.+\.h)$", LUA_LIB_INCLUDE_DIR)
+    def setup_cmake(self):
+        with open(self.cmake_file(), 'w') as file:
+            file.write(f"set(LUA_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
+            file.write(f"set(LUA_LIB {self.static_lib_file(ARTIFACT_LIB_NAME)} PARENT_SCOPE)\n")
