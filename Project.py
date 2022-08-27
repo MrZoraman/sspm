@@ -132,11 +132,11 @@ class Project:
 
             include_dirs_str = ""
             for include_dir in include_dirs:
-                include_dirs_str = include_dirs_str + " " + include_dir
+                include_dirs_str = include_dirs_str + " " + os.path.abspath(include_dir)
             
             static_libs_str = ""
             for static_lib in static_libs:
-                static_libs_str = static_libs_str + " " + static_lib
+                static_libs_str = static_libs_str + " " + os.path.abspath(static_lib)
             
             with open("sspm.cmake", 'w') as file:
                 file.write(f"set(SSPM_INCLUDE_DIRS {include_dirs_str})\n")
