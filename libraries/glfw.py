@@ -22,6 +22,7 @@ from Dependency import Dependency
 
 DOWNLOAD_URL = "https://github.com/glfw/glfw/releases/download/3.3.8/glfw-3.3.8.bin.WIN64.zip"
 CACHE_FILE_NAME = "glfw-3.3.8.bin.WIN64.zip"
+STATIC_LIB_NAME = "glfw3.lib"
 
 class Glfw(Dependency):
     def __init__(self, is_verbose: bool, dirs):
@@ -35,10 +36,9 @@ class Glfw(Dependency):
         cache_file = self.cache_file(CACHE_FILE_NAME)
         with ZipFile(cache_file, 'r') as zip:
             self.unzip_includes(zip, r"glfw-3.3.8.bin.WIN64/include/(GLFW/.+.h)")
-            self.unzip_static_lib(zip, "glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3dll.lib")
-            self.unzip_dynamic_lib(zip, "glfw-3.3.8.bin.WIN64/lib-vc2022/glfw3.dll")
+            self.unzip_static_lib(zip, f"glfw-3.3.8.bin.WIN64/lib-vc2022/{STATIC_LIB_NAME}")
     
     def setup_cmake(self):
         with open(self.cmake_file(), 'w') as file:
             file.write(f"set(GLFW_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
-            file.write(f"set(GLFW_LIB {self.static_lib_file('glfw3dll.lib')} PARENT_SCOPE)\n")
+            file.write(f"set(GLFW_LIB {self.static_lib_file(STATIC_LIB_NAME)} PARENT_SCOPE)\n")

@@ -23,8 +23,7 @@ from Dependency import Dependency
 
 DOWNLOAD_URL = "https://github.com/libuv/libuv/archive/refs/tags/v1.44.2.zip"
 CACHE_FILE_NAME = "uv-v1.44.2.zip"
-ARTIFACT_DLL_NAME = "uv.dll"
-ARTIFACT_LIB_NAME = "uv.lib"
+ARTIFACT_LIB_NAME = "uv_a.lib"
 
 class Uv(Dependency):
     def __init__(self, is_verbose: bool, dirs):
@@ -62,10 +61,6 @@ class Uv(Dependency):
         cache_file = self.cache_file(CACHE_FILE_NAME)
         with ZipFile(cache_file, 'r') as zip:
             self.unzip_includes(zip, r".*/include/(.+\.h)")
-        
-        dll_file_src = self.__artifact_dll()
-        self.copy_file(dll_file_src, self.dynamic_lib_file_debug(ARTIFACT_DLL_NAME))
-        self.copy_file(dll_file_src, self.dynamic_lib_file_release(ARTIFACT_DLL_NAME))
 
         lib_file_src = self.__artifact_lib()
         self.copy_file(lib_file_src, self.static_lib_file(ARTIFACT_LIB_NAME))

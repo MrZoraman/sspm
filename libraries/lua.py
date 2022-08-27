@@ -23,7 +23,6 @@ from Dependency import Dependency
 
 DOWNLOAD_URL = "https://github.com/lua/lua/archive/refs/tags/v5.4.4.zip"
 CACHE_FILE_NAME = "lua-v5.4.4.zip"
-ARTIFACT_DLL_NAME = "lua54.dll"
 ARTIFACT_LIB_NAME = "lua54.lib"
 CMAKELISTS_FILE = f"{os.path.dirname(__file__)}/cmakes/Lua54.cmake"
 
@@ -56,9 +55,7 @@ class Lua(Dependency):
             "cmake "
             f"-S {build_dir} "
             f"-B {build_dir}/build "
-            "-G \"Visual Studio 17 2022\" "
-            "-D CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE "
-            "-D BUILD_SHARED_LIBS=TRUE")
+            "-G \"Visual Studio 17 2022\"")
 
         os.system(f"cmake --build {build_dir}/build --config Release")
     
@@ -66,10 +63,6 @@ class Lua(Dependency):
         cache_file = self.cache_file(CACHE_FILE_NAME)
         with ZipFile(cache_file, 'r') as zip:
             self.unzip_includes(zip, r".*/(.+\.h)$")
-        
-        dll_file_src = self.__artifact_dll()
-        self.copy_file(dll_file_src, self.dynamic_lib_file_debug(ARTIFACT_DLL_NAME))
-        self.copy_file(dll_file_src, self.dynamic_lib_file_release(ARTIFACT_DLL_NAME))
 
         lib_file_src = self.__artifact_lib()
         self.copy_file(lib_file_src, self.static_lib_file(ARTIFACT_LIB_NAME))
