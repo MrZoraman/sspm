@@ -19,18 +19,20 @@
 import os
 import shutil
 
+from log import log_error, log_info
+
 def make_folder(path):
     if not os.path.exists(path):
-        print(f"Create directory: \033[92m{path}\033[m")
+        log_info("Project", "Create directory: ", path)
         os.makedirs(path)
         return True
     return False
 
 def delete_folder(path):
     if os.path.exists(path):
-        print(f"Delete directory: \033[92m{path}\033[m")
+        log_info("Project", "Delete directory: ", path)
         try:
             shutil.rmtree(path)
         except Exception as e:
-            print(f"\033[91mUnable to delete directory \033[92m{path}\033[91m]: {e.message}\033[m")
+            log_error("Project", "Unable to delete directory: ", path)
             exit(1)
