@@ -11,6 +11,30 @@
             "program": "${workspaceFolder}/sspm.py",
             "console": "integratedTerminal",
             "justMyCode": true
+        },
+        {
+            "name": "sspm.py --clean libs",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/sspm.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--clean",
+                "libs"
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "sspm.py --clean all",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/sspm.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--clean",
+                "all"
+            ],
+            "justMyCode": true
         }
     ]
 }
