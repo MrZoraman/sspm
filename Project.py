@@ -140,4 +140,4 @@ class Project:
             
             with open("sspm.cmake", 'w') as file:
                 file.write(f"set(SSPM_INCLUDE_DIRS {include_dirs_str})\n")
-                file.write(f"set(SSPM_LIBS {static_libs_str}\n")
+                file.write(f"set(SSPM_LIBS {static_libs_str})\n")
