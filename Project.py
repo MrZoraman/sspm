@@ -96,6 +96,10 @@ class Project:
         if dependency_name == "glfw":
             from libraries.glfw import Glfw
             return Glfw(self.__is_verbose, self.__dirs)
+        
+        if dependency_name == "imgui":
+            from libraries.imgui import Imgui
+            return Imgui(self.__is_verbose, self.__dirs)
 
         return None
     
