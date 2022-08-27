@@ -20,7 +20,6 @@ from Dependency import Dependency
 from Dirs import Dirs
 
 DOWNLOAD_URL = "https://raw.githubusercontent.com/sheredom/utf8.h/4e4d828174c35e4564c31a9e35580c299c69a063/utf8.h"
-
 CACHE_FILE_NAME = "utf8.h"
 INCLUDE_FILE_NAME = "utf8.h"
 

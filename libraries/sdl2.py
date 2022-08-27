@@ -21,7 +21,6 @@ from zipfile import ZipFile
 from Dependency import Dependency
 
 DOWNLOAD_URL = "https://github.com/libsdl-org/SDL/releases/download/release-2.24.0/SDL2-devel-2.24.0-VC.zip"
-
 CACHE_FILE_NAME = "SDL2-devel-2.24.0-VC.zip"
 
 class Sdl2(Dependency):
