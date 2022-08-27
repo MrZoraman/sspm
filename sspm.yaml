@@ -6,6 +6,7 @@ Dirs:
   LibBuild: test/lib_build
 Dependencies:
   - imgui
+  - imgui-opengl3
   # - glfw
   # - glad
   # - glm

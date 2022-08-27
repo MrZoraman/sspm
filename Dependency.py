@@ -69,6 +69,9 @@ class Dependency:
     def include_dir(self):
         return self.__dirs.include_dir(self.__name)
     
+    def dependency_include_dir(self, dep_name: str):
+        return self.__dirs.include_dir(dep_name)
+    
     def cmake_file(self):
         return self.__dirs.cmake_file(self.__name)
     

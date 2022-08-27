@@ -101,6 +101,10 @@ class Project:
             from libraries.imgui import Imgui
             return Imgui(self.__is_verbose, self.__dirs)
 
+        if dependency_name == "imgui-opengl3":
+            from libraries.imgui_opengl3 import Imgui_Opengl3
+            return Imgui_Opengl3(self.__is_verbose, self.__dirs)
+
         return None
     
     def setup_dependencies(self):
