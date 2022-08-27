@@ -5,8 +5,9 @@ Dirs:
   CMake: test/cmake
   LibBuild: test/lib_build
 Dependencies:
-  - enet
-  - lua
-  - sdl2
-  - utf8
-  - uv
+  - gsl
+  # - enet
+  # - lua
+  # - sdl2
+  # - utf8
+  # - uv

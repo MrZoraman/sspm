@@ -81,6 +81,10 @@ class Project:
             from libraries.lua import Lua
             return Lua(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "gsl":
+            from libraries.gsl import Gsl
+            return Gsl(self.__is_verbose, self.__dirs)
+        
         return None
     
     def setup_dependencies(self):
