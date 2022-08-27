@@ -40,6 +40,7 @@ class Dirs:
         make_folder(self.__cache_dir)
         make_folder(self.__lib_dir)
         make_folder(self.__cmake_dir)
+        make_folder(self.__lib_build_dir)
         make_folder(self.__include_dir)
         make_folder(self.__static_lib_dir)
         make_folder(self.__dynamic_lib_dir_debug)
@@ -75,6 +76,13 @@ class Dirs:
         file_name = f"{self.__dynamic_lib_dir_release}/{name}"
         self.__ensure_dir_exists_for_file(dep_name, file_name)
         return file_name
+    
+    def lib_build_dir(self, dep_name: str) -> str:
+        folder_name = f"{self.__lib_build_dir}/{dep_name}"
+        if not os.path.exists(folder_name):
+            log_info(dep_name, "Create directory: ", folder_name)
+            os.makedirs(folder_name)
+        return folder_name
     
     # def copy_include_from_cache(self, name: str, is_verbose: bool, cache_src: str, include_dest: str):
     #     include_file = f"{self.__include_dir}/{include_dest}"

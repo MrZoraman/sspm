@@ -70,6 +70,13 @@ class Dependency:
     def static_lib_file(self, name: str):
         return self.__dirs.static_lib_file(self.__name, name)
     
+    def lib_build_dir(self):
+        return self.__dirs.lib_build_dir(self.__name)
+    
+    def extract_zip_to_build_dir(self, zip_name:str):
+        with ZipFile(zip_name, 'r') as zip:
+            zip.extractall(self.lib_build_dir())
+    
     # def make_folder(self, path):
     #     if os.path.exists(path):
     #         # self.log_verbose(f"Directory {param(path)} already exists.")
