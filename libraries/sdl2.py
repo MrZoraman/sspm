@@ -36,9 +36,9 @@ class Sdl2(Dependency):
         cache_file = self.cache_file(CACHE_FILE_NAME)
         with ZipFile(cache_file, 'r') as zip:
             self.unzip_includes(zip, r".*/include/(.+)")
-            self.unzip_static_lib(zip, "SDL2-2.24.0/lib/x64/SDL2.lib", "SDL2.lib")
-            self.unzip_static_lib(zip, "SDL2-2.24.0/lib/x64/SDL2main.lib", "SDL2main.lib")
-            self.unzip_dynamic_lib(zip, "SDL2-2.24.0/lib/x64/SDL2.dll", "SDL2.dll")
+            self.unzip_static_lib(zip, "SDL2-2.24.0/lib/x64/SDL2.lib")
+            self.unzip_static_lib(zip, "SDL2-2.24.0/lib/x64/SDL2main.lib")
+            self.unzip_dynamic_lib(zip, "SDL2-2.24.0/lib/x64/SDL2.dll")
     
     def setup_cmake(self):
         with open(self.cmake_file(), 'w') as file:

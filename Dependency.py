@@ -116,7 +116,8 @@ class Dependency:
                     log_info(self.__name, f"Extract {param(file_name)} -> {param(out_file_name)}")
                     file.write(data)
     
-    def unzip_static_lib(self, zip_file: ZipFile, zip_path: str, name: str):
+    def unzip_static_lib(self, zip_file: ZipFile, zip_path: str):
+        name = os.path.basename(zip_path)
         lib_file = self.static_lib_file(name)
         if os.path.exists(lib_file):
             return
@@ -143,6 +144,7 @@ class Dependency:
             log_info(self.__name, f"Extract {param(zip_path)} -> {param(lib_file)}")
             file.write(data)
     
-    def unzip_dynamic_lib(self, zip_file: ZipFile, zip_path: str, name: str):
+    def unzip_dynamic_lib(self, zip_file: ZipFile, zip_path: str):
+        name = os.path.basename(zip_path)
         self.__unzip_dynamic_lib_debug(zip_file, zip_path, name)
         self.__unzip_dynamic_lib_release(zip_file, zip_path, name)
