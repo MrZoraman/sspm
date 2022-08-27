@@ -17,27 +17,9 @@
 # 3. This notice may not be removed or altered from any source distribution.
 
 import argparse
-import os
 
-# from setup.dirs import LIB_DIR, LIB_INCLUDE_DIR, LIB_BIN_DIR, LIB_CACHE_DIR, LIB_BUILD_DIR, PROJECT_BUILD_DIR, PROJECT_BUILD_DEBUG_DIR, PROJECT_BUILD_RELEASE_DIR
-# from setup.actions.clean import clean
-# from setup.dependencies import collect_dependencies
 from Project import find_project
-from colors import red
-
-
-def run_cmake():
-    os.system("cmake -S . -B build -G \"Visual Studio 17 2022\"")
-
-# def make_folders():
-#     make_folder(LIB_DIR)
-#     make_folder(LIB_CACHE_DIR)
-#     make_folder(LIB_INCLUDE_DIR)
-#     make_folder(LIB_BIN_DIR)
-#     make_folder(LIB_BUILD_DIR)
-#     make_folder(PROJECT_BUILD_DIR)
-#     make_folder(PROJECT_BUILD_DEBUG_DIR)
-#     make_folder(PROJECT_BUILD_RELEASE_DIR)
+from log import log_error
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Super Simple Package Manager for C/C++")
@@ -47,7 +29,7 @@ if __name__ == '__main__':
 
     project = find_project(args.verbose)
     if not project:
-        print(red("Unable to find project file!"))
+        log_error("Project", "Unable to find project file!")
         exit(0)
 
     if args.clean:
@@ -57,19 +39,3 @@ if __name__ == '__main__':
     project.make_directories()
 
     project.setup_dependencies()
-
-    # make_folders()
-
-    # dependencies = collect_dependencies(args.verbose)
-
-    # for dependency in dependencies:
-    #     dependency.log_info("Download")
-    #     dependency.download()
-
-    #     dependency.log_info("Build")
-    #     dependency.build()
-
-    #     dependency.log_info("Install")
-    #     dependency.install()
-    
-    # run_cmake()
