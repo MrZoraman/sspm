@@ -47,7 +47,6 @@ class Project:
             build_dir=raw_project_data["Dirs"]["Build"],
             cache_dir=raw_project_data["Dirs"]["Cache"],
             lib_dir=raw_project_data["Dirs"]["Lib"],
-            cmake_dir=raw_project_data["Dirs"]["CMake"],
             lib_build_dir=raw_project_data["Dirs"]["LibBuild"])
         self.__dependency_name_list = raw_project_data["Dependencies"]
         self.__is_verbose = is_verbose
@@ -112,6 +111,9 @@ class Project:
         return None
     
     def setup_dependencies(self):
+        include_dirs = []
+        static_libs = []
+
         for dependency_name in self.__dependency_name_list:
             dependency = self.__get_dependency(dependency_name)
             if not dependency:
@@ -121,4 +123,21 @@ class Project:
             dependency.download()
             dependency.build()
             dependency.install()
-            dependency.setup_cmake()
+
+            include_dirs.append(dependency.include_dir())
+
+            for dependency_lib in dependency.get_libs():
+                if not dependency_lib in static_libs:
+                    static_libs.append(dependency_lib)
+
+            include_dirs_str = ""
+            for include_dir in include_dirs:
+                include_dirs_str = include_dirs_str + " " + include_dir
+            
+            static_libs_str = ""
+            for static_lib in static_libs:
+                static_libs_str = static_libs_str + " " + static_lib
+            
+            with open("sspm.cmake", 'w') as file:
+                file.write(f"set(SSPM_INCLUDE_DIRS {include_dirs_str})\n")
+                file.write(f"set(SSPM_LIBS {static_libs_str}\n")

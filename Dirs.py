@@ -22,11 +22,10 @@ from filesystem import delete_folder, make_folder
 from log import log_error, log_info
 
 class Dirs:
-    def __init__(self, build_dir: str, cache_dir: str, lib_dir: str, cmake_dir: str, lib_build_dir: str):
+    def __init__(self, build_dir: str, cache_dir: str, lib_dir: str, lib_build_dir: str):
         self.__build_dir = build_dir
         self.__cache_dir = cache_dir
         self.__lib_dir = lib_dir
-        self.__cmake_dir = cmake_dir
         self.__lib_build_dir = lib_build_dir
         self.__include_dir = f"{lib_dir}/include"
         self.__static_lib_dir = f"{lib_dir}/bin"
@@ -37,7 +36,6 @@ class Dirs:
         make_folder(self.__build_dir)
         make_folder(self.__cache_dir)
         make_folder(self.__lib_dir)
-        make_folder(self.__cmake_dir)
         make_folder(self.__lib_build_dir)
         make_folder(self.__include_dir)
         make_folder(self.__static_lib_dir)
@@ -56,9 +54,6 @@ class Dirs:
 
     def include_dir(self, dep_name: str) -> str:
         return f"{self.__include_dir}/{dep_name}"
-    
-    def cmake_file(self, dep_name: str) -> str:
-        return f"{self.__cmake_dir}/{dep_name}.cmake"
     
     def static_lib_file(self, dep_name: str, name: str):
         file_name = f"{self.__static_lib_dir}/{dep_name}/{name}"

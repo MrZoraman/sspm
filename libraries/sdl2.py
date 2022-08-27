@@ -39,8 +39,5 @@ class Sdl2(Dependency):
             self.unzip_static_lib(zip, "SDL2-2.24.0/lib/x64/SDL2main.lib")
             self.unzip_dynamic_lib(zip, "SDL2-2.24.0/lib/x64/SDL2.dll")
     
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(SDL2_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
-            file.write(f"set(SDL2_LIB {self.static_lib_file('SDL2.lib')} PARENT_SCOPE)\n")
-            file.write(f"set(SDL2_MAIN_LIB {self.static_lib_file('SDL2main.lib')} PARENT_SCOPE)\n")
+    def get_libs(self):
+        return [ self.static_lib_file('SDL2.lib'), self.static_lib_file('SDL2main.lib') ]

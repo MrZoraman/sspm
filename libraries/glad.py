@@ -56,7 +56,5 @@ class Glad(Dependency):
         self.copy_file(self.lib_build_file("include/KHR/khrplatform.h"), self.include_file("KHR/khrplatform.h"))
         self.copy_file(self.lib_build_file(f"build/Release/{ARTIFACT_LIB_NAME}"), self.static_lib_file(ARTIFACT_LIB_NAME))
     
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(GLAD_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
-            file.write(f"set(GLAD_LIB {self.static_lib_file(ARTIFACT_LIB_NAME)} PARENT_SCOPE)\n")
+    def get_libs(self):
+        return [ self.static_lib_file(ARTIFACT_LIB_NAME) ]

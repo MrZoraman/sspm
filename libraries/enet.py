@@ -62,7 +62,5 @@ class Enet(Dependency):
         lib_file_dest = self.static_lib_file(ARTIFACT_FILE_NAME)
         self.copy_file(lib_file_src, lib_file_dest)
     
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(ENET_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
-            file.write(f"set(ENET_LIBS {self.static_lib_file(ARTIFACT_FILE_NAME)} winmm ws2_32 PARENT_SCOPE)\n")
+    def get_libs(self):
+        return [ self.static_lib_file(ARTIFACT_FILE_NAME), "winmm", "ws2_32" ]

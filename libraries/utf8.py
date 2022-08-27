@@ -35,7 +35,3 @@ class Utf8(Dependency):
         cache_file_path = self.cache_file(CACHE_FILE_NAME)
         include_file_path = self.include_file(INCLUDE_FILE_NAME)
         self.copy_file(cache_file_path, include_file_path)
-    
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(UTF8_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)")

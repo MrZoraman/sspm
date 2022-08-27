@@ -37,8 +37,6 @@ class Glfw(Dependency):
         with ZipFile(cache_file, 'r') as zip:
             self.unzip_includes(zip, r"glfw-3.3.8.bin.WIN64/include/(GLFW/.+.h)")
             self.unzip_static_lib(zip, f"glfw-3.3.8.bin.WIN64/lib-vc2022/{STATIC_LIB_NAME}")
-    
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(GLFW_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
-            file.write(f"set(GLFW_LIB {self.static_lib_file(STATIC_LIB_NAME)} PARENT_SCOPE)\n")
+
+    def get_libs(self):
+        return [ self.static_lib_file(STATIC_LIB_NAME) ]

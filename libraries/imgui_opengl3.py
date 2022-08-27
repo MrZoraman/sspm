@@ -62,8 +62,6 @@ class Imgui_Opengl3(Dependency):
         self.copy_file(self.lib_build_file("imgui-1.88/backends/imgui_impl_opengl3.h"), self.include_file("imgui_impl_opengl3.h"))
         
         self.copy_file(self.lib_build_file(f"imgui-1.88/build/Release/{ARTIFACT_LIB_NAME}"), self.static_lib_file(ARTIFACT_LIB_NAME))
-
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(IMGUI_OPENGL3_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
-            file.write(f"set(IMGUI_OPENGL3_LIB {self.static_lib_file(ARTIFACT_LIB_NAME)} PARENT_SCOPE)\n")
+    
+    def get_libs(self):
+        return [ self.static_lib_file(ARTIFACT_LIB_NAME) ]

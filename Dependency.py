@@ -48,8 +48,8 @@ class Dependency:
     def install(self):
         pass
 
-    def setup_cmake(self):
-        pass
+    def get_libs(self):
+        return []
     
     def download_file(self, url: str, dest_path: str):
         if os.path.exists(dest_path):
@@ -71,9 +71,6 @@ class Dependency:
     
     def dependency_include_dir(self, dep_name: str):
         return self.__dirs.include_dir(dep_name)
-    
-    def cmake_file(self):
-        return self.__dirs.cmake_file(self.__name)
     
     def static_lib_file(self, name: str):
         return self.__dirs.static_lib_file(self.__name, name)

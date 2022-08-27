@@ -66,8 +66,6 @@ class Lua(Dependency):
 
         lib_file_src = self.__artifact_lib()
         self.copy_file(lib_file_src, self.static_lib_file(ARTIFACT_LIB_NAME))
-
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(LUA_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
-            file.write(f"set(LUA_LIB {self.static_lib_file(ARTIFACT_LIB_NAME)} PARENT_SCOPE)\n")
+    
+    def get_libs(self):
+        return [ self.static_lib_file(ARTIFACT_LIB_NAME) ]

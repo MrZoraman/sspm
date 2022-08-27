@@ -36,7 +36,3 @@ class Glm(Dependency):
         cache_file = self.cache_file(CACHE_FILE_NAME)
         with ZipFile(cache_file, 'r') as zip:
             self.unzip_includes(zip, r"glm-0.9.9.8/(glm/.+\.((h(pp)?)|(inl)))")
-    
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(GLM_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)")

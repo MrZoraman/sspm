@@ -36,7 +36,3 @@ class Gsl(Dependency):
         cache_file = self.cache_file(CACHE_FILE_NAME)
         with ZipFile(cache_file, 'r') as zip:
             self.unzip_includes(zip, r"GSL-4.0.0/include/(gsl/.+)")
-    
-    def setup_cmake(self):
-        with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(GSL_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)")
