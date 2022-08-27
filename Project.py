@@ -74,6 +74,10 @@ class Project:
             from libraries.enet import Enet
             return Enet(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "uv":
+            from libraries.uv import Uv
+            return Uv(self.__is_verbose, self.__dirs)
+        
         return None
     
     def setup_dependencies(self):

@@ -9,4 +9,4 @@ Dependencies:
   # - lua
   - sdl2
   - utf8
-  # - uv
+  - uv
