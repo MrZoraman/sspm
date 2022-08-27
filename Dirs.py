@@ -17,11 +17,9 @@
 # 3. This notice may not be removed or altered from any source distribution.
 
 import os
-import shutil
 
-from colors import param
 from filesystem import delete_folder, make_folder
-from log import log_error, log_info, log_verbose
+from log import log_error, log_info
 
 class Dirs:
     def __init__(self, build_dir: str, cache_dir: str, lib_dir: str, cmake_dir: str, lib_build_dir: str):
