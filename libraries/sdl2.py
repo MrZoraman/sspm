@@ -20,14 +20,9 @@ from zipfile import ZipFile
 
 from Dependency import Dependency
 
-# SDL2_CACHE_ZIP = f"{LIB_CACHE_DIR}/SDL2-devel-2.24.0-VC.zip"
-# SDL2_INCLUDE_DIR = f"{LIB_INCLUDE_DIR}/sdl2"
-# SDL2_BIN_DIR = f"{LIB_BIN_DIR}/sdl2"
-
 DOWNLOAD_URL = "https://github.com/libsdl-org/SDL/releases/download/release-2.24.0/SDL2-devel-2.24.0-VC.zip"
 
 CACHE_FILE_NAME = "SDL2-devel-2.24.0-VC.zip"
-
 
 class Sdl2(Dependency):
     def __init__(self, is_verbose: bool, dirs):
@@ -50,11 +45,3 @@ class Sdl2(Dependency):
             file.write(f"set(SDL2_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
             file.write(f"set(SDL2_LIB {self.static_lib_file('SDL2.lib')} PARENT_SCOPE)\n")
             file.write(f"set(SDL2_MAIN_LIB {self.static_lib_file('SDL2main.lib')} PARENT_SCOPE)\n")
-
-    # def install(self):
-    #     self.make_folder(SDL2_INCLUDE_DIR)
-    #     self.make_folder(SDL2_BIN_DIR)
-
-    #     with zipfile.ZipFile(SDL2_CACHE_ZIP, 'r') as zip:
-    #         self.extract_pattern_zip(zip, r".*/include/(.+)", SDL2_INCLUDE_DIR)
-    #         self.extract_pattern_zip(zip, r".*/lib/x64/(.+)", SDL2_BIN_DIR)
