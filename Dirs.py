@@ -24,11 +24,12 @@ from filesystem import delete_folder, make_folder
 from log import log_error, log_info, log_verbose
 
 class Dirs:
-    def __init__(self, build_dir: str, cache_dir: str, lib_dir: str, cmake_dir: str):
+    def __init__(self, build_dir: str, cache_dir: str, lib_dir: str, cmake_dir: str, lib_build_dir: str):
         self.__build_dir = build_dir
         self.__cache_dir = cache_dir
         self.__lib_dir = lib_dir
         self.__cmake_dir = cmake_dir
+        self.__lib_build_dir = lib_build_dir
         self.__include_dir = f"{lib_dir}/include"
         self.__static_lib_dir = f"{lib_dir}/bin"
         self.__dynamic_lib_dir_debug = f"{build_dir}/Debug"

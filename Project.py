@@ -48,7 +48,8 @@ class Project:
             build_dir=raw_project_data["Dirs"]["Build"],
             cache_dir=raw_project_data["Dirs"]["Cache"],
             lib_dir=raw_project_data["Dirs"]["Lib"],
-            cmake_dir=raw_project_data["Dirs"]["CMake"])
+            cmake_dir=raw_project_data["Dirs"]["CMake"],
+            lib_build_dir=raw_project_data["Dirs"]["LibBuild"])
         self.__dependency_name_list = raw_project_data["Dependencies"]
         self.__is_verbose = is_verbose
 

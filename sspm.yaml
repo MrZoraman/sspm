@@ -3,6 +3,7 @@ Dirs:
   Cache: test/lib_cache
   Lib: test/lib
   CMake: test/cmake
+  LibBuild: test/lib_build
 Dependencies:
   - enet
   # - lua
