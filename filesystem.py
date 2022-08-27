@@ -1,8 +1,23 @@
+# Copyright (c) 2022 MrZoraman
+# 
+# This software is provided 'as-is', without any express or implied
+# warranty. In no event will the authors be held liable for any damages
+# arising from the use of this software.
+
+# Permission is granted to anyone to use this software for any purpose,
+# including commercial applications, and to alter it and redistribute it
+# freely, subject to the following restrictions:
+
+# 1. The origin of this software must not be misrepresented; you must not
+#    claim that you wrote the original software. If you use this software
+#    in a product, an acknowledgment in the product documentation would be
+#    appreciated but is not required.
+# 2. Altered source versions must be plainly marked as such, and must not be
+#    misrepresented as being the original software.
+# 3. This notice may not be removed or altered from any source distribution.
+
 import os
-import re
 import shutil
-import wget
-import zipfile
 
 def make_folder(path):
     if not os.path.exists(path):
@@ -19,35 +34,3 @@ def delete_folder(path):
         except Exception as e:
             print(f"\033[91mUnable to delete directory \033[92m{path}\033[91m]: {e.message}\033[m")
             exit(1)
-
-def download(url, file, verbose):
-    if not os.path.exists(file):
-        print(f"Download: \033[92m{file}\033[m")
-        wget.download(url, file)
-        print()
-    elif verbose:
-        print(f"File \033[92m{file}\033[m already exists.")
-
-def extract_pattern_zip(zip_file: zipfile.ZipFile, pattern, base_path, is_verbose):
-    for file_name in zip_file.namelist():
-        match = re.match(pattern, file_name)
-        if match:
-            out_file_name = f"{base_path}/{match.group(1)}"
-            if os.path.exists(out_file_name):
-                if is_verbose:
-                    print(f"File \033[92m{out_file_name}\033[m already exists.")
-                continue
-            data = zip_file.read(file_name)
-            with open(out_file_name, "wb") as file:
-                print(f"Extract \033[92m{out_file_name}\033[m")
-                file.write(data)
-
-def copy_file(src, dest, verbose):
-    if not os.path.exists(src):
-        print(f"\033[91mFile not found: \033[m{src}")
-        exit(1)
-
-    if not os.path.exists(dest):
-        shutil.copyfile(src, dest)
-    elif verbose:
-        print(f"File \033[92m{dest}\033[m already exists.")
