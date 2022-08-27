@@ -6,7 +6,7 @@ Dirs:
   LibBuild: test/lib_build
 Dependencies:
   - enet
-  # - lua
+  - lua
   - sdl2
   - utf8
   - uv

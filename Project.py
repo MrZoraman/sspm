@@ -78,6 +78,10 @@ class Project:
             from libraries.uv import Uv
             return Uv(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "lua":
+            from libraries.lua import Lua
+            return Lua(self.__is_verbose, self.__dirs)
+        
         return None
     
     def setup_dependencies(self):

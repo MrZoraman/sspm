@@ -39,8 +39,8 @@ LUA_BIN_FILE = f"{LUA_LIB_BIN_DIR}/lua54.lib"
 LUA_DLL_NAME = "lua54.dll"
 
 class Lua(Dependency):
-    def __init__(self, is_verbose):
-        Dependency.__init__(self, "lua", is_verbose)
+    def __init__(self, is_verbose: bool, dirs):
+        Dependency.__init__(self, "lua", is_verbose, dirs)
     
     def download(self):
         self.download_file("https://github.com/lua/lua/archive/refs/tags/v5.4.4.zip", LUA_CACHE_ZIP)
