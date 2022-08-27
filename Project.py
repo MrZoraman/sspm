@@ -19,7 +19,6 @@
 import os
 import yaml
 
-from filesystem import delete_folder, make_folder
 from colors import param, red
 from Dependency import Dependency
 from Dirs import Dirs
@@ -95,22 +94,3 @@ class Project:
             dependency.build()
             dependency.install()
             dependency.setup_cmake()
-            
-
-
-#         def clean_build():
-#     notify_clean("Build")
-#     delete_folder(PROJECT_BUILD_DIR)
-
-# def clean_libs():
-#     notify_clean("Libraries")
-#     delete_folder(LIB_BUILD_DIR)
-#     delete_folder(LIB_BIN_DIR)
-#     delete_folder(LIB_INCLUDE_DIR)
-
-# def clean(clean_type: str):
-#     clean_type = clean_type.lower()
-#     if clean_type == "build" or clean_type == "all":
-#         clean_build()
-#     if clean_type == "libs" or clean_type == "all":
-#         clean_libs()
