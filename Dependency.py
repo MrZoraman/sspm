@@ -70,11 +70,17 @@ class Dependency:
     def static_lib_file(self, name: str):
         return self.__dirs.static_lib_file(self.__name, name)
     
+    def dynamic_lib_file_debug(self, name: str):
+        return self.__dirs.dynamic_lib_file_debug(self.__name, name)
+    
+    def dynamic_lib_file_release(self, name: str):
+        return self.__dirs.dynamic_lib_file_release(self.__name, name)
+    
     def lib_build_dir(self):
         return self.__dirs.lib_build_dir(self.__name)
     
-    def extract_zip_to_build_dir(self, zip_name:str):
-        with ZipFile(zip_name, 'r') as zip:
+    def extract_cache_zip_to_build_dir(self, zip_name:str):
+        with ZipFile(self.cache_file(zip_name), 'r') as zip:
             zip.extractall(self.lib_build_dir())
     
     # def make_folder(self, path):
@@ -134,7 +140,7 @@ class Dependency:
             file.write(data)
     
     def __unzip_dynamic_lib_debug(self, zip_file: ZipFile, zip_path: str, name: str):
-        lib_file = self.__dirs.dynamic_lib_file_debug(self.__name, name)
+        lib_file = self.dynamic_lib_file_debug(name)
         if os.path.exists(lib_file):
             return
         data = zip_file.read(zip_path)
@@ -143,7 +149,7 @@ class Dependency:
             file.write(data)
     
     def __unzip_dynamic_lib_release(self, zip_file: ZipFile, zip_path: str, name: str):
-        lib_file = self.__dirs.dynamic_lib_file_release(self.__name, name)
+        lib_file = self.dynamic_lib_file_release(name)
         if os.path.exists(lib_file):
             return
         data = zip_file.read(zip_path)

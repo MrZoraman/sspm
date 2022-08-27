@@ -41,7 +41,7 @@ class Enet(Dependency):
         if os.path.exists(artifact_file):
             return
 
-        self.extract_zip_to_build_dir(self.cache_file(CACHE_FILE_NAME))
+        self.extract_cache_zip_to_build_dir(CACHE_FILE_NAME)
 
         build_dir = f"{self.lib_build_dir()}/enet-1.3.17"
 
