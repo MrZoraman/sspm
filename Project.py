@@ -89,6 +89,10 @@ class Project:
             from libraries.glm import Glm
             return Glm(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "glad":
+            from libraries.glad import Glad
+            return Glad(self.__is_verbose, self.__dirs)
+        
         return None
     
     def setup_dependencies(self):
