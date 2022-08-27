@@ -82,11 +82,6 @@ class Dirs:
             os.makedirs(folder_name)
         return folder_name
     
-    # def copy_include_from_cache(self, name: str, is_verbose: bool, cache_src: str, include_dest: str):
-    #     include_file = f"{self.__include_dir}/{include_dest}"
-    #     source_file = f"{self.__cache_dir}/{cache_src}"
-    #     self.__copy_file(name, is_verbose, source_file, include_file)
-    
     def clean(self, clean_type: str):
         clean_type = clean_type.lower()
         if clean_type == "all":
@@ -106,23 +101,3 @@ class Dirs:
         if not os.path.exists(folder_name):
             log_info(dep_name, "Create directory: ", folder_name)
             os.makedirs(folder_name)
-    
-    # def __copy_file(self, name: str, is_verbose: bool, src: str, dest: str):
-    #     if not os.path.exists(src):
-    #         log_error(name, "File not found: ", src)
-    #         exit(1)
-        
-    #     if os.path.exists(dest):
-    #         log_verbose(name, is_verbose, "File already exists: ", dest)
-    #         return
-        
-    #     dirname = os.path.dirname(dest)
-    #     self.__make_folder(name, dirname)
-
-    #     log_info(name, f"Copy {param(src)} -> {param(dest)}")
-    #     shutil.copyfile(src, dest)
-    
-    # def __make_folder(self, name: str, path: str):
-    #     if not os.path.exists(path):
-    #         log_info(name, "Create directory: ", path)
-    #         os.makedirs(path)
