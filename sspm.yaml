@@ -4,7 +4,7 @@ Dirs:
   Lib: test/lib
   CMake: test/cmake
 Dependencies:
-  # - enet
+  - enet
   # - lua
   - sdl2
   - utf8

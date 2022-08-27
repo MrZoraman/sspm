@@ -69,6 +69,10 @@ class Project:
             from libraries.sdl2 import Sdl2
             return Sdl2(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "enet":
+            from libraries.enet import Enet
+            return Enet(self.__is_verbose, self.__dirs)
+        
         return None
     
     def setup_dependencies(self):
