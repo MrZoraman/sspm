@@ -39,4 +39,4 @@ class Gsl(Dependency):
     
     def setup_cmake(self):
         with open(self.cmake_file(), 'w') as file:
-            file.write(f"set(UTF8_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)")
+            file.write(f"set(GSL_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)")
