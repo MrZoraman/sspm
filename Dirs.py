@@ -88,11 +88,13 @@ class Dirs:
             delete_folder(self.__build_dir)
             delete_folder(self.__lib_dir)
             delete_folder(self.__cmake_dir)
+            delete_folder(self.__lib_build_dir)
         elif clean_type == "build":
             delete_folder(self.__build_dir)
         elif clean_type == "libs":
             delete_folder(self.__lib_dir)
             delete_folder(self.__cmake_dir)
+            delete_folder(self.__lib_build_dir)
         else:
             log_error("Clean", "Unknown clean type: ", clean_type)
     
