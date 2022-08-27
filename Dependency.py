@@ -83,6 +83,9 @@ class Dependency:
     
     def lib_build_dir(self):
         return self.__dirs.lib_build_dir(self.__name)
+
+    def lib_build_file(self, file_name: str) -> str:
+        return f"{self.lib_build_dir()}/{file_name}"
     
     def extract_cache_zip_to_build_dir(self, zip_name:str):
         with ZipFile(self.cache_file(zip_name), 'r') as zip:

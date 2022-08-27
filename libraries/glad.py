@@ -16,9 +16,47 @@
 #    misrepresented as being the original software.
 # 3. This notice may not be removed or altered from any source distribution.
 
+import os
+
 from Dependency import Dependency
 from Dirs import Dirs
+
+CMAKELISTS_FILE = f"{os.path.dirname(__file__)}/cmakes/glad.cmake"
+ARTIFACT_LIB_NAME = "glad.lib"
 
 class Glad(Dependency):
     def __init__(self, is_verbose: bool, dirs: Dirs):
         Dependency.__init__(self, "glad", is_verbose, dirs)
+    
+    def __artifact_lib(self):
+        return f"{self.lib_build_dir()}/build/Release/{ARTIFACT_LIB_NAME}"
+
+    def build(self):
+        artifact_lib = self.__artifact_lib()
+        if os.path.exists(artifact_lib):
+            return
+
+        build_dir = self.lib_build_dir()
+        os.system(f"python -m glad --spec gl --generator c-debug --out-path {build_dir} --reproducible")
+        
+        self.copy_file(CMAKELISTS_FILE, f"{self.lib_build_dir()}/CMakeLists.txt")
+
+        build_dir = self.lib_build_dir()
+
+        os.system(
+            "cmake "
+            f"-S {build_dir} "
+            f"-B {build_dir}/build "
+            "-G \"Visual Studio 17 2022\"")
+
+        os.system(f"cmake --build {build_dir}/build --config Release")
+    
+    def install(self):
+        self.copy_file(self.lib_build_file("include/glad/glad.h"), self.include_file("glad/glad.h"))
+        self.copy_file(self.lib_build_file("include/KHR/khrplatform.h"), self.include_file("KHR/khrplatform.h"))
+        self.copy_file(self.lib_build_file(f"build/Release/{ARTIFACT_LIB_NAME}"), self.static_lib_file(ARTIFACT_LIB_NAME))
+    
+    def setup_cmake(self):
+        with open(self.cmake_file(), 'w') as file:
+            file.write(f"set(GLAD_INCLUDE_DIR {self.include_dir()} PARENT_SCOPE)\n")
+            file.write(f"set(GLAD_LIB {self.static_lib_file(ARTIFACT_LIB_NAME)} PARENT_SCOPE)\n")
