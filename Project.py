@@ -93,6 +93,10 @@ class Project:
             from libraries.glad import Glad
             return Glad(self.__is_verbose, self.__dirs)
         
+        if dependency_name == "glfw":
+            from libraries.glfw import Glfw
+            return Glfw(self.__is_verbose, self.__dirs)
+
         return None
     
     def setup_dependencies(self):
