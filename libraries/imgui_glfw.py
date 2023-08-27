@@ -20,8 +20,8 @@ import os
 
 from Dependency import Dependency
 
-DOWNLOAD_URL = "https://github.com/ocornut/imgui/archive/refs/tags/v1.88.zip"
-CACHE_FILE_NAME = "imgui-v1.88.zip"
+DOWNLOAD_URL = "https://github.com/ocornut/imgui/archive/refs/tags/v1.89.8.zip"
+CACHE_FILE_NAME = "imgui-v1.89.8.zip"
 CMAKELISTS_FILE = f"{os.path.dirname(__file__)}/cmakes/imgui-glfw.cmake"
 ARTIFACT_LIB_NAME = "imgui_impl_glfw.lib"
 
@@ -34,7 +34,7 @@ class Imgui_Glfw(Dependency):
         self.download_file(DOWNLOAD_URL, path)
     
     def __artifact_lib(self):
-        return f"{self.lib_build_dir()}/imgui-1.88/build/Release/{ARTIFACT_LIB_NAME}"
+        return f"{self.lib_build_dir()}/imgui-1.89.8/build/Release/{ARTIFACT_LIB_NAME}"
 
     def build(self):
         artifact_file_dll = self.__artifact_lib()
@@ -43,9 +43,9 @@ class Imgui_Glfw(Dependency):
 
         self.extract_cache_zip_to_build_dir(CACHE_FILE_NAME)
 
-        self.copy_file(CMAKELISTS_FILE, f"{self.lib_build_dir()}/imgui-1.88/CMakeLists.txt")
+        self.copy_file(CMAKELISTS_FILE, f"{self.lib_build_dir()}/imgui-1.89.8/CMakeLists.txt")
         
-        build_dir = f"{self.lib_build_dir()}/imgui-1.88"
+        build_dir = f"{self.lib_build_dir()}/imgui-1.89.8"
 
         imgui_include_dir = os.path.abspath(self.dependency_include_dir("imgui"))
         glfw_include_dir = os.path.abspath(self.dependency_include_dir("glfw"))
@@ -61,9 +61,9 @@ class Imgui_Glfw(Dependency):
         os.system(f"cmake --build {build_dir}/build --config Release")
     
     def install(self):
-        self.copy_file(self.lib_build_file("imgui-1.88/backends/imgui_impl_glfw.h"), self.include_file("imgui_impl_glfw.h"))
+        self.copy_file(self.lib_build_file("imgui-1.89.8/backends/imgui_impl_glfw.h"), self.include_file("imgui_impl_glfw.h"))
         
-        self.copy_file(self.lib_build_file(f"imgui-1.88/build/Release/{ARTIFACT_LIB_NAME}"), self.static_lib_file(ARTIFACT_LIB_NAME))
+        self.copy_file(self.lib_build_file(f"imgui-1.89.8/build/Release/{ARTIFACT_LIB_NAME}"), self.static_lib_file(ARTIFACT_LIB_NAME))
     
     def get_libs(self):
         return [ self.static_lib_file(ARTIFACT_LIB_NAME) ]
